@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — SOLVIQX</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0E1318">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  :root { --charcoal: #0E1318; --emerald: #13C98A; --offwhite: #F8F8F8; --display: 'Space Grotesk', system-ui, sans-serif; --body: 'DM Sans', system-ui, sans-serif; --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace; }
+  * { box-sizing: border-box; }
+  html { scrollbar-width: none; }
+  html::-webkit-scrollbar { display: none; }
+  body { margin: 0; min-height: 100vh; background: var(--charcoal); color: var(--offwhite); font-family: var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+  .grid-bg { position: fixed; inset: 0; pointer-events: none;
+    background-image: linear-gradient(rgba(248,248,248,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(248,248,248,.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%); }
+
+  .bar { position: fixed; top: 12px; left: 12px; right: 12px; z-index: 5; display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 10px 10px clamp(22px, 2.6vw, 36px); border-radius: 999px; background: rgba(14,19,24,.74); border: 1px solid rgba(248,248,248,.14);
+    -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); }
+  .bar img { height: 22px; width: auto; display: block; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 14px 30px; border-radius: 999px;
+    font: 600 16px/1 var(--body); text-decoration: none; transition: transform .2s ease, border-color .2s, color .2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--emerald); color: var(--charcoal); }
+  .btn-ghost { border: 1.5px solid rgba(248,248,248,.35); color: var(--offwhite); }
+  .btn-ghost:hover { border-color: var(--emerald); color: var(--emerald); }
+  .bar .btn { min-height: 44px; padding: 11px 22px; font-size: 15px; }
+
+  main { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 24px 80px; }
+
+  .code { position: relative; font-family: var(--display); font-weight: 700; line-height: .9; letter-spacing: -.05em;
+    font-size: clamp(120px, 24vw, 300px); color: transparent; -webkit-text-stroke: 1.5px rgba(248,248,248,.22); user-select: none; }
+  .code .mid { color: var(--emerald); -webkit-text-stroke: 0; }
+  .glitch { animation: glitch 4.5s steps(1) infinite; display: inline-block; }
+  @keyframes glitch { 0%, 92%, 100% { transform: none; } 93% { transform: translate(-6px, 2px) skewX(-8deg); } 95% { transform: translate(5px, -2px); } 97% { transform: translate(-2px, 0) skewX(4deg); } }
+
+
+  h1 { margin: 0 0 14px; font-family: var(--display); font-weight: 600; font-size: clamp(30px, 4.2vw, 52px); letter-spacing: -.03em; line-height: 1.05; }
+  p.sub { margin: 0 auto 36px; max-width: 520px; font-size: 18px; line-height: 1.6; color: rgba(248,248,248,.72); }
+  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+
+  .rise { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+  :focus-visible { outline: 2px solid var(--emerald); outline-offset: 3px; }
+  @media (max-width: 600px) { .bar .btn { padding: 10px 16px; font-size: 14px; } .bar img { height: 17px; } }
+  @media (prefers-reduced-motion: reduce) { .rise, .glitch { animation: none; } }
+</style>
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+
+<header class="bar">
+  <a href="/" aria-label="SOLVIQX home"><img src="/assets/wordmark.png" alt="SOLVIQX"></a>
+  <a href="/#contact" class="btn btn-primary">Discuss Your Project</a>
+</header>
+
+<main>
+  <div class="code rise" aria-hidden="true" style="margin-bottom:28px">4<span class="mid glitch">0</span>4</div>
+
+
+  <h1 class="rise" style="animation-delay:.25s">This page doesn't exist.</h1>
+  <p class="sub rise" style="animation-delay:.35s">The link may be broken, or the page may have moved. Let's get you back on track.</p>
+
+  <div class="actions rise" style="animation-delay:.45s">
+    <a href="/" class="btn btn-primary">Back to home</a>
+    <a href="/#contact" class="btn btn-ghost">Contact us</a>
+  </div>
+</main>
+
+</body>
+</html>
