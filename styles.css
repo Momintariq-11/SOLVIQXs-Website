@@ -805,3 +805,6 @@ html.lenis, html.lenis body { height: auto; }
   .site-nav .nav-links a { padding: 11px 10px; }
   .site-nav .nav-links a::after { left: 10px; right: 10px; }
 }
+/* Big screens: the Work case and the founder note sit in a centred column instead of hugging the left */
+.work > * { width: 100%; max-width: 980px; margin-inline: auto; }
+.founder { justify-content: center; }
