@@ -12,6 +12,9 @@
   const hero = document.querySelector('.hero-center');
   const cards = [...document.querySelectorAll('.tile, .case-stack li')];
   const wraps = pages.filter((p) => p.classList.contains('sheet')).map((p) => [p, p.firstElementChild, !p.classList.contains('plain')]);
+  const pill = document.querySelector('.nav-pill'), label = document.querySelector('.island-label');
+  const names = { about: 'About', software: 'Services', process: 'Workflow', work: 'Work', founder: 'From the founder', faq: 'FAQ', contact: 'Contact' };
+  let lastId = '';
   let ticking = false, autoTimer = 0, autoActive = false;
 
   const showSteps = (n) => {
@@ -68,6 +71,16 @@
     const id = pages[active].id;
     document.querySelectorAll('.nav-links a').forEach((a) =>
       a.classList.toggle('active', (a.dataset.pages || '').split(' ').includes(id)));
+    // the island: a pill slides under the current page's button; on phones the page name rises in instead
+    const on = document.querySelector('.nav-links a.active');
+    pill.style.opacity = on ? 1 : 0;
+    if (on) { pill.style.left = on.offsetLeft + 'px'; pill.style.width = on.offsetWidth + 'px'; }
+    if (id !== lastId) {
+      lastId = id;
+      label.textContent = names[id] || '';
+      label.classList.remove('swap'); void label.offsetWidth; label.classList.add('swap');
+      document.documentElement.classList.toggle('at-end', id === 'contact');   // buttons leave on the last page
+    }
 
     if (!stepsWrap) return;
     if (noMotion) { showSteps(4); return; }
