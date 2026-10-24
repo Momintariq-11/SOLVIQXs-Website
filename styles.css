@@ -747,7 +747,6 @@ html.lenis, html.lenis body { height: auto; }
 .footer-social a { color: rgba(248,248,248,.78); text-decoration: none; }
 .footer-social a:hover { color: var(--emerald); }
 .footer .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 14px 22px; border-top: 1px solid rgba(248,248,248,.1); font-size: 13px; color: rgba(248,248,248,.55); }
-.footer .footer-buttons .btn-primary { color: var(--charcoal); }
 .sheet:not(.dark) .accent { color: var(--emerald-ink); }
 .footer .footer-buttons { order: 3; flex-basis: 100%; justify-content: center; }
 /* First page ends a little early so the next panel is already waiting at the bottom */
@@ -781,3 +780,9 @@ html.lenis, html.lenis body { height: auto; }
 .site-nav .nav-links { min-width: 0; }
 .site-nav .nav-links a[href] { display: block; }
 @media (max-width: 720px) { .site-nav .nav-links { -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent); mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent); } }
+/* Footer page links: plain text */
+.footer .footer-buttons { gap: 8px 26px; font-size: 14px; }
+/* Island: Contact stands out as a green button */
+.site-nav .nav-links a.nav-contact, .site-nav .nav-links a.nav-contact.active { margin-left: 6px; padding: 8px 16px; border-radius: 999px; background: var(--emerald); color: var(--charcoal); font-weight: 600; }
+.site-nav .nav-links a.nav-contact::after { display: none; }
+.site-nav .nav-links a.nav-contact:hover { background: #1fdc9a; color: var(--charcoal); }
