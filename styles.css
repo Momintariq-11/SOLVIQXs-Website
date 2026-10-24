@@ -730,5 +730,6 @@ body { background: var(--white); }
 
 .sheet.dark .case-stack .step-tag { color: var(--emerald); }
 .faq-wrap > .ask-card { flex: 1 1 100%; margin-top: 0; }
-.founder-quote { margin: 20px 0 0; font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 44px); line-height: 1.2; letter-spacing: -.02em; color: var(--charcoal); }
+.founder-quote { margin: 20px 0 0; font-family: var(--font-display); font-size: clamp(26px, 2.6vw, 36px); line-height: 1.25; letter-spacing: -.02em; color: var(--charcoal); }
 .founder-quote .accent { color: var(--emerald-ink); }
+@media (max-width: 720px) { .founder-quote { font-size: 24px; } }
