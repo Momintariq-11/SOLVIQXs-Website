@@ -9,6 +9,11 @@
   const stepsWrap = document.getElementById('stepsWrap');
   const items = stepsWrap ? [...stepsWrap.querySelectorAll('.steps li')] : [];
   const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Each panel is pinned under the nav (or by its bottom edge when taller than the screen) and the next panel slides over it
+  const pin = () => pages.forEach((p) => {
+    const sheet = p.classList.contains('sheet');
+    p.style.top = Math.min(sheet ? 76 : 0, innerHeight - p.offsetHeight - (sheet ? 16 : 0)) + 'px';
+  });
   let ticking = false, autoTimer = 0, autoActive = false;
 
   const showSteps = (n) => {
@@ -38,6 +43,8 @@
       top += el.offsetHeight;
     });
     pages.forEach((p, i) => p.classList.toggle('in-view', i === active));
+    // a page hidden under its fully arrived successor never peeks out around a shorter panel
+    pages.forEach((p, i) => { const n = pages[i + 1]; p.classList.toggle('is-under', !!n && n.getBoundingClientRect().top <= (parseFloat(n.style.top) || 0) + 2); });
     const id = pages[active].id;
     document.querySelectorAll('.nav-links a').forEach((a) =>
       a.classList.toggle('active', (a.dataset.pages || '').split(' ').includes(id)));
@@ -49,7 +56,10 @@
   };
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
+  window.addEventListener('resize', () => { pin(); onScroll(); });
+  new ResizeObserver(() => { pin(); onScroll(); }).observe(main);
+  pages.forEach((p) => new ResizeObserver(() => { pin(); onScroll(); }).observe(p));
+  pin();
   update();
 })();
 
@@ -59,7 +69,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 // Hero: the last word is typed out, deleted, and replaced by the next one
 const typed = document.getElementById('typed');
 if (typed && !reduceMotion) {
-  const words = ['software.', 'web apps.', 'mobile apps.', 'dashboards.', 'websites.', 'systems.'];
+  const words = ['software.', 'web apps.', 'SaaS products.', 'mobile apps.', 'AI automation.', 'dashboards.', 'websites.', 'systems.'];
   typed.classList.add('typing');
   (async () => {
     await wait(4200);
@@ -211,12 +221,4 @@ document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((link) => {
     window.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' });
     history.replaceState(null, '', hash);
   });
-});
-
-// Case-study dialog: opens from its button, closes with the × or a click outside
-document.querySelectorAll('[data-case]').forEach((btn) => {
-  const dlg = document.getElementById(btn.dataset.case);
-  btn.addEventListener('click', () => dlg.showModal());
-  dlg.querySelector('.case-close').addEventListener('click', () => dlg.close());
-  dlg.addEventListener('click', (ev) => { if (ev.target === dlg) dlg.close(); });
 });
