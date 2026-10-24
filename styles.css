@@ -736,3 +736,8 @@ body { background: var(--white); }
 .founder-sign a:hover { color: var(--emerald-ink); }
 
 .contact > .wrap { padding-bottom: 44px; }
+
+/* Panels rise into place as they come on screen */
+.js .sheet > .wrap { opacity: 0; transform: translateY(70px); transition: transform .9s cubic-bezier(.2,.75,.25,1), opacity .6s ease; }
+.js .page.in-view > .wrap { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .js .sheet > .wrap { opacity: 1; transform: none; } }

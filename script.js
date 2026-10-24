@@ -37,7 +37,8 @@
       if (i > -1 && top <= line) active = i;
       top += el.offsetHeight;
     });
-    pages.forEach((p, i) => p.classList.toggle('in-view', i === active));
+    // every page on screen animates in as soon as it peeks up, and resets once it has mostly left
+    pages.forEach((p) => { const r = p.getBoundingClientRect(); p.classList.toggle('in-view', r.top < innerHeight * 0.9 && r.bottom > innerHeight * 0.2); });
     const id = pages[active].id;
     document.querySelectorAll('.nav-links a').forEach((a) =>
       a.classList.toggle('active', (a.dataset.pages || '').split(' ').includes(id)));
