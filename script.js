@@ -10,10 +10,8 @@
   const items = stepsWrap ? [...stepsWrap.querySelectorAll('.steps li')] : [];
   const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Each panel is pinned under the nav (or by its bottom edge when taller than the screen) and the next panel slides over it
-  const pin = () => pages.forEach((p) => {
-    const sheet = p.classList.contains('sheet');
-    p.style.top = Math.min(sheet ? 76 : 0, innerHeight - p.offsetHeight - (sheet ? 16 : 0)) + 'px';
-  });
+  const sheets = pages.filter((p) => p.classList.contains('sheet'));
+  const pin = () => sheets.forEach((p) => { p.style.top = Math.min(76, innerHeight - p.offsetHeight - 16) + 'px'; });
   let ticking = false, autoTimer = 0, autoActive = false;
 
   const showSteps = (n) => {
@@ -58,7 +56,7 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', () => { pin(); onScroll(); });
   new ResizeObserver(() => { pin(); onScroll(); }).observe(main);
-  pages.forEach((p) => new ResizeObserver(() => { pin(); onScroll(); }).observe(p));
+  sheets.forEach((p) => new ResizeObserver(() => { pin(); onScroll(); }).observe(p));
   pin();
   update();
 })();
