@@ -786,3 +786,8 @@ html.lenis, html.lenis body { height: auto; }
 .site-nav .nav-links a.nav-contact, .site-nav .nav-links a.nav-contact.active { margin-left: 6px; padding: 8px 16px; border-radius: 999px; background: var(--emerald); color: var(--charcoal); font-weight: 600; }
 .site-nav .nav-links a.nav-contact::after { display: none; }
 .site-nav .nav-links a.nav-contact:hover { background: #1fdc9a; color: var(--charcoal); }
+/* Last page: everything centred */
+.contact-center { align-items: center; text-align: center; }
+.contact-center .lead { margin: 0 auto; }
+.contact-center .form { margin-inline: auto; }
+.contact-center .form .btn { align-self: center; }
