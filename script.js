@@ -41,6 +41,13 @@
       top += el.offsetHeight;
     });
     pages.forEach((p, i) => p.classList.toggle('in-view', i === active));
+    // a panel being covered drifts up and shrinks a little, so it leaves instead of just sitting there
+    if (!noMotion) sheets.forEach((p, i) => {
+      const n = sheets[i + 1], w = p.firstElementChild;
+      if (!n || !w) return;
+      const k = Math.min(Math.max((innerHeight - n.getBoundingClientRect().top) / (innerHeight - (parseFloat(n.style.top) || 0)), 0), 1);
+      w.style.transform = k ? `translateY(${-k * 48}px) scale(${1 - k * 0.04})` : '';
+    });
     // a page hidden under its fully arrived successor never peeks out around a shorter panel
     pages.forEach((p, i) => { const n = pages[i + 1]; p.classList.toggle('is-under', !!n && n.getBoundingClientRect().top <= (parseFloat(n.style.top) || 0) + 2); });
     const id = pages[active].id;
