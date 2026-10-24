@@ -56,22 +56,19 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// Hero: the last word swaps — the old word vanishes upward, the new one bounces in
+// Hero: the last word is typed out, deleted, and replaced by the next one
 const typed = document.getElementById('typed');
 if (typed && !reduceMotion) {
   const words = ['software.', 'web apps.', 'mobile apps.', 'dashboards.', 'websites.', 'systems.'];
+  typed.classList.add('typing');
   (async () => {
-    await wait(7200);
+    await wait(4200);
     let i = 0;
     for (;;) {
-      typed.classList.remove('swap-in');
-      typed.classList.add('swap-out');
-      await wait(420);
-      typed.textContent = words[++i % words.length];
-      typed.classList.remove('swap-out');
-      void typed.offsetWidth; // restart the animation
-      typed.classList.add('swap-in');
-      await wait(2600);
+      while (typed.textContent) { typed.textContent = typed.textContent.slice(0, -1); await wait(35); }
+      await wait(250);
+      for (const ch of words[++i % words.length]) { typed.textContent += ch; await wait(75); }
+      await wait(2200);
     }
   })();
 }
@@ -214,4 +211,12 @@ document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((link) => {
     window.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' });
     history.replaceState(null, '', hash);
   });
+});
+
+// Case-study dialog: opens from its button, closes with the × or a click outside
+document.querySelectorAll('[data-case]').forEach((btn) => {
+  const dlg = document.getElementById(btn.dataset.case);
+  btn.addEventListener('click', () => dlg.showModal());
+  dlg.querySelector('.case-close').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', (ev) => { if (ev.target === dlg) dlg.close(); });
 });
