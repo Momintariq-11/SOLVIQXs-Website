@@ -46,9 +46,12 @@
       if (hero) { const H = hero.parentElement.offsetHeight, k = clamp(y / H); hero.style.transform = `translateY(${-80 * k}px)`; hero.style.opacity = 1 - clamp((k - 0.35) / 0.5); }
       // pages fly up: start 120px low and smaller, reach full size once their top is 40% down the screen
       wraps.forEach(([p, w, panel]) => {
-        const t = clamp((vh - p.getBoundingClientRect().top) / (vh * 0.6));
-        w.style.transform = `translateY(${(1 - t) * 120}px)` + (panel ? ` scale(${0.9 + 0.1 * t})` : '');
-        w.style.opacity = 0.35 + 0.65 * clamp(t / 0.85);
+        const r = p.getBoundingClientRect();
+        const t = clamp((vh - r.top) / (vh * 0.6));
+        // once it has passed the top it keeps flying up, a little faster than the scroll, and eases out
+        const out = clamp(-r.top / Math.max(r.height, vh));
+        w.style.transform = `translateY(${(1 - t) * 120 - out * 90}px)` + (panel ? ` scale(${(0.9 + 0.1 * t) - out * 0.05})` : '');
+        w.style.opacity = (0.35 + 0.65 * clamp(t / 0.85)) * (1 - clamp((out - 0.5) / 0.5) * 0.5);   // tall panels stay readable until they are mostly gone
       });
       // cards settle into place one after another as they come up
       cards.forEach((c, i) => {
