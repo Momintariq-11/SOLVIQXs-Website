@@ -642,8 +642,9 @@ html.has-intro:not(.intro-open), html.has-intro:not(.intro-open) body { overflow
 /* Every page uses the same background; panels sit on top of it. Light-theme colours are remapped inside sheets. */
 /* Every page, hero to footer, shares one plain white background; content sits on dark panels that rise into place */
 .sheet { background: transparent; color: var(--charcoal); border: 0; border-radius: 0; margin-top: 0; box-shadow: none;
-  position: sticky; min-height: 0; padding: 0 clamp(12px, 2.5vw, 36px) 16px; }
-.sheet > .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding: 44px clamp(24px, 4vw, 56px); border-radius: 26px;
+  position: relative; min-height: 0; padding: 0 clamp(12px, 2.5vw, 36px) 16px; margin-top: -112px; }
+.hero + .sheet { margin-top: 0; }
+.sheet > .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding: 44px clamp(24px, 4vw, 56px) 96px; border-radius: 26px;
   min-height: calc(100vh - 108px); }
 /* Panels alternate between dark and light so every edge is easy to see */
 .sheet.dark > .wrap { background: var(--charcoal); color: var(--offwhite); border: 1px solid rgba(248,248,248,.12); box-shadow: 0 -8px 28px -10px rgba(0,0,0,.5);
@@ -655,8 +656,6 @@ html.has-intro:not(.intro-open), html.has-intro:not(.intro-open) body { overflow
 .sheet > .split, .sheet > .founder { align-content: center; }
 main > .page.sheet { padding-top: 0; }
 .hero { position: relative; min-height: 100vh; }
-.page { transition: opacity .2s ease; }
-.page.is-under { visibility: hidden; opacity: 0; transition: opacity .25s ease, visibility 0s .25s; }
 .footer { margin: 12px clamp(12px, 2.5vw, 36px) 16px; border: 0; border-radius: 18px; background: var(--charcoal); }
 .sheet.dark .eyebrow { color: var(--emerald); }
 .sheet.dark .sys-head, .sheet.dark .lead a { color: var(--offwhite); }
@@ -735,3 +734,5 @@ body { background: var(--white); }
 .founder-sign span { color: var(--emerald-ink); }
 .founder-sign a { color: var(--charcoal); font-weight: 600; text-decoration: none; }
 .founder-sign a:hover { color: var(--emerald-ink); }
+
+.contact > .wrap { padding-bottom: 44px; }

@@ -9,9 +9,6 @@
   const stepsWrap = document.getElementById('stepsWrap');
   const items = stepsWrap ? [...stepsWrap.querySelectorAll('.steps li')] : [];
   const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // Each panel is pinned under the nav (or by its bottom edge when taller than the screen) and the next panel slides over it
-  const sheets = pages.filter((p) => p.classList.contains('sheet'));
-  const pin = () => sheets.forEach((p) => { p.style.top = Math.min(76, innerHeight - p.offsetHeight - 16) + 'px'; });
   let ticking = false, autoTimer = 0, autoActive = false;
 
   const showSteps = (n) => {
@@ -35,21 +32,12 @@
     const y = window.scrollY, line = y + window.innerHeight * 0.55;
     let top = 0, active = 0;
     [...main.children].forEach((el) => {
-      top += parseFloat(getComputedStyle(el).marginTop) || 0;   // sheets overlap the page above on phones
+      top += parseFloat(getComputedStyle(el).marginTop) || 0;   // each panel overlaps the bottom of the one above
       const i = pages.indexOf(el);
       if (i > -1 && top <= line) active = i;
       top += el.offsetHeight;
     });
     pages.forEach((p, i) => p.classList.toggle('in-view', i === active));
-    // a panel being covered drifts up and shrinks a little, so it leaves instead of just sitting there
-    if (!noMotion) sheets.forEach((p, i) => {
-      const n = sheets[i + 1], w = p.firstElementChild;
-      if (!n || !w) return;
-      const k = Math.min(Math.max((innerHeight - n.getBoundingClientRect().top) / (innerHeight - (parseFloat(n.style.top) || 0)), 0), 1);
-      w.style.transform = k ? `translateY(${-k * 48}px) scale(${1 - k * 0.04})` : '';
-    });
-    // a page hidden under its fully arrived successor never peeks out around a shorter panel
-    pages.forEach((p, i) => { const n = pages[i + 1]; p.classList.toggle('is-under', !!n && n.getBoundingClientRect().top <= (parseFloat(n.style.top) || 0) + 2); });
     const id = pages[active].id;
     document.querySelectorAll('.nav-links a').forEach((a) =>
       a.classList.toggle('active', (a.dataset.pages || '').split(' ').includes(id)));
@@ -61,10 +49,7 @@
   };
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', () => { pin(); onScroll(); });
-  new ResizeObserver(() => { pin(); onScroll(); }).observe(main);
-  sheets.forEach((p) => new ResizeObserver(() => { pin(); onScroll(); }).observe(p));
-  pin();
+  window.addEventListener('resize', onScroll);
   update();
 })();
 
@@ -223,7 +208,7 @@ document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((link) => {
       top += el.offsetHeight;
     }
     ev.preventDefault();
-    window.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' });
+    window.scrollTo({ top: Math.max(top - 76, 0), behavior: reduceMotion ? 'auto' : 'smooth' });
     history.replaceState(null, '', hash);
   });
 });
