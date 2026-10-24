@@ -758,29 +758,26 @@ html.lenis, html.lenis body { height: auto; }
 .case-note footer strong { font-size: 18px; }
 .case-note footer span { font-size: 15px; }
 
-/* ===== Dynamic island: glass bar with page buttons; the current page is highlighted, buttons leave on the last page ===== */
+/* ===== Dynamic island: glass bar with every page button; the current page is underlined ===== */
 .site-nav .nav { display: flex; align-items: center; justify-content: center; gap: 18px; width: max-content; max-width: calc(100vw - 16px); margin: 0 auto;
-  padding: 7px 7px 7px 22px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16);
+  padding: 6px 10px 6px 22px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16);
   background: rgba(14,19,24,.58); -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%);
-  box-shadow: 0 12px 32px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.1); transition: gap .5s ease, padding .5s ease; }
-.site-nav .nav-links { position: relative; display: flex; flex-wrap: nowrap; gap: 2px; max-width: 640px; overflow: hidden; font-size: 14px;
-  transition: max-width .6s cubic-bezier(.2,.7,.2,1), opacity .4s ease; }
-.site-nav .nav-links a { position: relative; z-index: 1; padding: 8px 14px; border-radius: 999px; white-space: nowrap; }
-.site-nav .nav-links a::after { display: none; }
-.site-nav .nav-links a.active { color: var(--charcoal); animation: islandUp .45s cubic-bezier(.2,.7,.2,1); }
-.nav-pill { position: absolute; top: 0; bottom: 0; left: 0; width: 0; border-radius: 999px; background: var(--emerald); opacity: 0;
-  transition: left .45s cubic-bezier(.2,.7,.2,1), width .45s cubic-bezier(.2,.7,.2,1), opacity .3s ease; }
-.site-nav .nav-cta { max-width: 200px; overflow: hidden; transition: max-width .6s cubic-bezier(.2,.7,.2,1), opacity .4s ease; }
-.site-nav .nav-cta .btn { min-height: 38px; padding: 8px 18px; font-size: 14px; white-space: nowrap; }
-.at-end .site-nav .nav-links, .at-end .site-nav .nav-cta { max-width: 0; opacity: 0; pointer-events: none; }
-.at-end .site-nav .nav { gap: 0; padding: 12px 24px; }
-@keyframes islandUp { from { transform: translateY(70%); opacity: 0; } to { transform: none; opacity: 1; } }
-.island-label { display: none; }
+  box-shadow: 0 12px 32px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.1); }
+.site-nav .nav-links { display: flex; flex-wrap: nowrap; gap: 2px; font-size: 14px; overflow-x: auto; scrollbar-width: none; }
+.site-nav .nav-links::-webkit-scrollbar { display: none; }
+.site-nav .nav-links a { position: relative; padding: 10px 12px; white-space: nowrap; }
+.site-nav .nav-links a::after { content: ""; display: block; position: absolute; left: 12px; right: 12px; bottom: 4px; height: 2px; border-radius: 2px;
+  background: var(--emerald); transform: scaleX(0); transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.site-nav .nav-links a.active { color: var(--offwhite); }
+.site-nav .nav-links a.active::after { transform: scaleX(1); }
 @media (max-width: 720px) {
-  .site-nav .nav { padding: 6px 6px 6px 16px; gap: 12px; }
-  .site-nav .nav-links { display: none; }
-  .island-label { display: inline-block; overflow: hidden; font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--offwhite); white-space: nowrap; }
-  .island-label:empty { display: none; }
-  .island-label.swap { animation: islandUp .45s cubic-bezier(.2,.7,.2,1); }
-  .at-end .island-label { display: none; }
+  .site-nav .nav { padding: 4px 6px 4px 14px; gap: 8px; }
+  .site-nav .wordmark-link img { height: 13px; }
+  .site-nav .nav-links { font-size: 13px; }
+  .site-nav .nav-links a { padding: 10px 9px; }
+  .site-nav .nav-links a::after { left: 9px; right: 9px; }
 }
+.site-nav .nav { flex-wrap: nowrap; }
+.site-nav .nav-links { min-width: 0; }
+.site-nav .nav-links a[href] { display: block; }
+@media (max-width: 720px) { .site-nav .nav-links { -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent); mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent); } }
