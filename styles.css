@@ -625,8 +625,6 @@ html.has-intro:not(.intro-open), html.has-intro:not(.intro-open) body { overflow
 }
 @media (max-width: 899px), (max-height: 639px) { main > .page:not(.hero) { padding-top: 52px; } }
 
-/* Each sheet overlaps the page above by its curve radius, so the rounded corners show that page instead of the black body behind it */
-.sheet { margin-top: calc(-1 * var(--r)); }
 
 
 /* ===== v11: no lines between workflow steps, panels on a plain background, founder note ===== */
@@ -642,10 +640,9 @@ html.has-intro:not(.intro-open), html.has-intro:not(.intro-open) body { overflow
 .intro .iwelcome > span { display: block; min-height: 1.05em; }
 
 /* Every page uses the same background; panels sit on top of it. Light-theme colours are remapped inside sheets. */
-/* Pages are light with a faint pixel grid; content sits on a dark panel that rises into place */
-.sheet { background-color: var(--offwhite); color: var(--charcoal); border-top: 1px solid rgba(14,19,24,.08);
-  background-image: linear-gradient(rgba(14,19,24,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(14,19,24,.05) 1px, transparent 1px);
-  background-size: 28px 28px; padding: 72px clamp(12px, 2.5vw, 36px) 16px; }
+/* Every page, hero to footer, shares one plain white background; content sits on dark panels that rise into place */
+.sheet { background: var(--white); color: var(--charcoal); border-radius: 0; margin-top: 0; box-shadow: none;
+  padding: 72px clamp(12px, 2.5vw, 36px) 16px; }
 .sheet > .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding: 44px clamp(24px, 4vw, 56px); border-radius: 26px;
   background: var(--charcoal); color: var(--offwhite);
   --ink-soft: rgba(248,248,248,.72); --line-light: rgba(248,248,248,.14); --white: #151C23; }
@@ -701,3 +698,17 @@ html:not(.is-scrolled) .scroll-down span, html:not(.is-scrolled) .scroll-down sv
 .swatches span { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 6px; border: 1px solid rgba(248,248,248,.18); border-radius: 99px; font-size: 13px; }
 .swatches i { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(248,248,248,.25); }
 .case-dialog .eyebrow { padding-right: 44px; }
+
+
+/* ===== v14: the hero joins the same white background ===== */
+:root { --emerald-ink: #0A8F63; }   /* darker emerald, readable as text on white */
+body { background: var(--white); }
+.hero.dark { background: var(--white); color: var(--charcoal); }
+.hero .grid-bg { display: none; }
+.hero .kicker, .hero .accent { color: var(--emerald-ink); }
+.hero .hero-sub { color: var(--ink-soft); }
+.hero .btn-ghost { border-color: rgba(14,19,24,.3); color: var(--charcoal); }
+.hero .btn-ghost:hover { border-color: var(--emerald-ink); color: var(--emerald-ink); }
+.hero .scroll-down { color: var(--ink-soft); }
+.hero .scroll-down svg { color: var(--emerald-ink); }
+.site-nav .nav { background: rgba(14,19,24,.92); }
