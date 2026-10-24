@@ -164,17 +164,6 @@ html { overflow-x: clip; }
 .tiles-3 .tile h3 { margin-top: 10px; }
 .u-mark { background: linear-gradient(transparent 68%, rgba(19,201,138,.55) 68%, rgba(19,201,138,.55) 92%, transparent 92%); }
 
-/* Example system panel */
-.sys { border-radius: 10px; border: 1px solid rgba(248,248,248,.12); background: rgba(248,248,248,.03); padding: 22px; }
-.sys-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-family: var(--font-display); font-size: 14px; font-weight: 600; color: rgba(248,248,248,.8); }
-.sys-head em { font-style: normal; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: rgba(248,248,248,.55); border: 1px solid rgba(248,248,248,.2); border-radius: 99px; padding: 3px 10px; }
-.sys-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; }
-.sys-card { border-radius: 8px; padding: 18px; background: rgba(248,248,248,.04); border: 1px solid rgba(248,248,248,.1); transition: border-color .3s, transform .3s; }
-.sys-card:hover { border-color: var(--emerald); transform: translateY(-3px); }
-.sys-card small { display: block; font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--emerald); margin-bottom: 6px; }
-.sys-card b { font-weight: 500; font-size: 16px; line-height: 1.4; }
-.sys-foot { display: flex; align-items: center; gap: 10px; margin-top: 16px; font-size: 14px; color: rgba(248,248,248,.6); }
-.sys-foot .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 0 4px rgba(19,201,138,.18); animation: blink 2s ease-in-out infinite; }
 .hero-foot { position: relative; display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 32px; font-family: var(--font-display); font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: rgba(248,248,248,.55); }
 .scroll-cue { display: flex; flex-direction: column; align-items: center; gap: 12px; }
 .scroll-cue i { width: 1px; height: 44px; background: rgba(248,248,248,.15); position: relative; overflow: hidden; }
@@ -291,14 +280,6 @@ html { overflow-x: clip; }
 .scroll-down:hover { color: var(--emerald); }
 .scroll-down svg { color: var(--emerald); animation: bounce 1.4s ease-in-out infinite; }
 
-/* Example system panel on a light page */
-.light .sys { background: var(--white); border-color: var(--line-light); box-shadow: 0 30px 60px -40px rgba(14,19,24,.35); }
-.light .sys-head { color: var(--charcoal); }
-.light .sys-head em { color: var(--ink-soft); border-color: var(--line-light); }
-.light .sys-card { background: var(--offwhite); border-color: var(--line-light); }
-.light .sys-card small { color: var(--ink-soft); }
-.light .sys-card small::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; background: var(--emerald); transform: skewX(-42deg); }
-.light .sys-foot { color: var(--ink-soft); }
 .light .lead a { color: var(--charcoal); font-weight: 600; text-decoration-color: var(--emerald); text-underline-offset: 3px; }
 
 /* FAQ accordion */
@@ -320,15 +301,6 @@ html { overflow-x: clip; }
   .faq summary { font-size: 16px; }
 }
 
-/* Business system modules light up one after another, like data flowing between them */
-@keyframes pulseCard { 0%, 14%, 100% { border-color: var(--line-light); box-shadow: none; } 5% { border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(19,201,138,.18); } }
-.sys-flow { grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }
-.sys-flow .sys-card { animation: pulseCard 7.2s ease-in-out infinite; }
-.sys-flow .sys-card:nth-child(2) { animation-delay: 1.2s; }
-.sys-flow .sys-card:nth-child(3) { animation-delay: 2.4s; }
-.sys-flow .sys-card:nth-child(4) { animation-delay: 3.6s; }
-.sys-flow .sys-card:nth-child(5) { animation-delay: 4.8s; }
-.sys-flow .sys-card:nth-child(6) { animation-delay: 6s; }
 
 /* FAQ: contact card fills the left column */
 .ask-card { position: relative; overflow: hidden; margin-top: 40px; padding: 32px; border-radius: 10px; background: var(--charcoal); color: var(--offwhite); }
@@ -630,8 +602,6 @@ html.has-intro:not(.intro-open), html.has-intro:not(.intro-open) body { overflow
 /* ===== v11: no lines between workflow steps, panels on a plain background, founder note ===== */
 .steps-wrap .steps-track, .steps-wrap .steps-fill { display: none; }
 
-.light .sys { background: transparent; border: 0; box-shadow: none; padding: 0; }
-.light .sys-card { background: var(--white); border-radius: 14px; padding: 22px; box-shadow: 0 18px 40px -28px rgba(14,19,24,.4); }
 
 
 
@@ -657,7 +627,7 @@ main > .page.sheet { padding-top: 0; }
 .hero { position: relative; min-height: 100vh; }
 .footer { margin: 12px clamp(12px, 2.5vw, 36px) 16px; border: 0; border-radius: 18px; background: var(--charcoal); }
 .sheet.dark .eyebrow { color: var(--emerald); }
-.sheet.dark .sys-head, .sheet.dark .lead a { color: var(--offwhite); }
+.sheet.dark .lead a { color: var(--offwhite); }
 .sheet.dark .step-num { background: #1d252d; box-shadow: 0 0 0 8px var(--charcoal); }
 .sheet.dark .who { background: var(--white); border: 1px solid var(--line-light); }
 .sheet.dark .faq summary::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F8F8F8' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E"); }
@@ -757,3 +727,5 @@ body { background: var(--white); }
 .footer-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
 .footer .btn { min-height: 40px; padding: 8px 18px; font-size: 14px; }
 .copyright { margin: 0; padding: 0 0 22px; text-align: center; font-size: 13px; color: rgba(248,248,248,.55); }
+
+.sheet.dark .case-stack .step-tag { color: var(--emerald); }
