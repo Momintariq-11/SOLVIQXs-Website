@@ -112,9 +112,6 @@ html { overflow-x: clip; }
 .white { background: var(--white); }
 .dark { background: var(--charcoal); color: var(--offwhite); }
 
-@media (min-width: 900px) and (min-height: 640px) {
-  .page { position: sticky; top: 0; height: 100vh; max-height: 1000px; min-height: 0; overflow: hidden; }
-}
 
 .deco-slab { position: absolute; top: -10%; height: 120%; background: rgba(19,201,138,.06); transform: skewX(-42deg); pointer-events: none; }
 
@@ -628,9 +625,8 @@ html.has-intro:not(.intro-open), html.has-intro:not(.intro-open) body { overflow
 }
 @media (max-width: 899px), (max-height: 639px) { main > .page:not(.hero) { padding-top: 52px; } }
 
-/* Where pages are not pinned (phones, short screens) each sheet overlaps the page above by its curve radius,
-   so the rounded corners show that page instead of the black body behind it */
-@media (max-width: 899px), (max-height: 639px) { .sheet { margin-top: calc(-1 * var(--r)); } }
+/* Each sheet overlaps the page above by its curve radius, so the rounded corners show that page instead of the black body behind it */
+.sheet { margin-top: calc(-1 * var(--r)); }
 
 
 /* ===== v11: no lines between workflow steps, panels on a plain background, founder note ===== */
@@ -646,8 +642,17 @@ html.has-intro:not(.intro-open), html.has-intro:not(.intro-open) body { overflow
 .intro .iwelcome > span { display: block; min-height: 1.05em; }
 
 /* Every page uses the same background; panels sit on top of it. Light-theme colours are remapped inside sheets. */
-.sheet { background: var(--charcoal); color: var(--offwhite); border-top: 1px solid rgba(248,248,248,.08);
+/* Pages are light with a faint pixel grid; content sits on a dark panel that rises into place */
+.sheet { background-color: var(--offwhite); color: var(--charcoal); border-top: 1px solid rgba(14,19,24,.08);
+  background-image: linear-gradient(rgba(14,19,24,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(14,19,24,.05) 1px, transparent 1px);
+  background-size: 28px 28px; padding: 72px clamp(12px, 2.5vw, 36px) 16px; }
+.sheet > .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding: 44px clamp(24px, 4vw, 56px); border-radius: 26px;
+  background: var(--charcoal); color: var(--offwhite);
   --ink-soft: rgba(248,248,248,.72); --line-light: rgba(248,248,248,.14); --white: #151C23; }
+.js .sheet > .wrap { opacity: 0; transform: translateY(80px); transition: transform .9s cubic-bezier(.2,.75,.25,1), opacity .6s ease; }
+.js .page.in-view > .wrap { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .js .sheet > .wrap { opacity: 1; transform: none; } }
+.footer { margin: 12px clamp(12px, 2.5vw, 36px) 16px; border: 0; border-radius: 18px; background: var(--charcoal); }
 .sheet .eyebrow { color: var(--emerald); }
 .sheet .sys-head, .sheet .lead a { color: var(--offwhite); }
 .sheet .step-num { background: #1d252d; box-shadow: 0 0 0 8px var(--charcoal); }
@@ -685,8 +690,14 @@ html:not(.is-scrolled) .scroll-down span, html:not(.is-scrolled) .scroll-down sv
 .case-dialog h3 { font-size: 30px; margin: 8px 0 18px; }
 .case-dialog h4 { margin: 20px 0 6px; font-family: var(--font-display); font-size: 14px; letter-spacing: .14em; text-transform: uppercase; color: var(--emerald); }
 .case-dialog p { margin: 0; color: rgba(248,248,248,.78); }
-.case-dialog blockquote { margin: 26px 0 0; padding: 18px 0 0; border-top: 1px solid rgba(248,248,248,.14); }
-.case-dialog blockquote footer strong { display: block; margin-top: 12px; }
-.case-dialog blockquote footer span { color: var(--emerald); font-size: 14px; }
 .case-close { position: absolute; top: 14px; right: 16px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(248,248,248,.08); color: var(--offwhite); font-size: 22px; line-height: 1; cursor: pointer; }
 .case-close:hover { background: var(--emerald); color: var(--charcoal); }
+
+.founder-sign a { display: inline-block; margin-top: 12px; margin-left: 14px; color: var(--offwhite); font-size: 15px; text-underline-offset: 3px; text-decoration-color: var(--emerald); }
+.founder-sign a:hover { color: var(--emerald); }
+.case-dialog ul { margin: 0; padding-left: 20px; color: rgba(248,248,248,.78); }
+.case-dialog li { margin: 4px 0; }
+.swatches { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.swatches span { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 6px; border: 1px solid rgba(248,248,248,.18); border-radius: 99px; font-size: 13px; }
+.swatches i { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(248,248,248,.25); }
+.case-dialog .eyebrow { padding-right: 44px; }
