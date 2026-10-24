@@ -32,6 +32,7 @@
     const y = window.scrollY, line = y + window.innerHeight * 0.55;
     let top = 0, active = 0;
     [...main.children].forEach((el) => {
+      top += parseFloat(getComputedStyle(el).marginTop) || 0;   // sheets overlap the page above on phones
       const i = pages.indexOf(el);
       if (i > -1 && top <= line) active = i;
       top += el.offsetHeight;
@@ -119,7 +120,7 @@ if (intro && !reduceMotion) {
     [45, 'Connecting your systems'],
     [70, 'Polishing the details'],
     [88, 'Almost ready'],
-    [100, 'Welcome to SOLVIQX']
+    [100, 'Ready']
   ];
   // Status text "decodes" into place: characters cycle through code-like glyphs, then resolve left to right
   const glyphs = '01<>/{}[]#=+*ABCDEFXQ';
@@ -152,9 +153,8 @@ if (intro && !reduceMotion) {
     setMsg(steps.filter(([at]) => v >= at).pop()[1]);
     if (t < 1) { requestAnimationFrame(tick); return; }
     intro.classList.add('is-welcome');
-    setTimeout(() => intro.classList.add('is-cut'), 650);
-    setTimeout(() => { intro.classList.add('is-open'); document.documentElement.classList.add('intro-open'); }, 1100);
-    setTimeout(() => intro.remove(), 2300);
+    setTimeout(() => { intro.classList.add('is-open'); document.documentElement.classList.add('intro-open'); }, 700);
+    setTimeout(() => intro.remove(), 1700);
   };
   requestAnimationFrame(tick);
 } else {
@@ -233,7 +233,11 @@ document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((link) => {
     if (!target) return;
     const page = target.closest('main > .page') || target;
     let top = 0;
-    for (const el of document.querySelector('main').children) { if (el === page) break; top += el.offsetHeight; }
+    for (const el of document.querySelector('main').children) {
+      top += parseFloat(getComputedStyle(el).marginTop) || 0;
+      if (el === page) break;
+      top += el.offsetHeight;
+    }
     ev.preventDefault();
     window.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' });
     history.replaceState(null, '', hash);

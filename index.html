@@ -57,25 +57,16 @@
 </head>
 <body>
 
-<!-- Opening intro: full logo above the centre line, loader below it.
-     When loading reaches 100%, a horizontal line draws across and the two halves open (top up, bottom down). -->
+<!-- Opening intro: a Welcome screen with a loader bar; when loading reaches 100% it fades away. -->
 <div class="intro" id="intro" aria-hidden="true">
-  <!-- Top half carries the S/X symbol (opens upward) -->
-  <div class="ihalf itop">
-    <img class="imono" src="assets/monogram.png" alt="">
-  </div>
-  <!-- Bottom half carries the SOLVIQX lettering and the loader (opens downward) -->
-  <div class="ihalf ibottom">
-    <img class="iword" src="assets/wordmark.png" alt="">
-    <div class="iload">
-      <div class="iload-row">
-        <div class="istatus"><i class="ipulse"></i><span id="introMsg">Getting things ready</span></div>
-        <div class="ipct"><span id="introPct">000</span><em>%</em></div>
-      </div>
-      <div class="ibar"><div class="ifill" id="introFill"></div></div>
+  <p class="iwelcome">Welcome<span class="accent">.</span></p>
+  <div class="iload">
+    <div class="iload-row">
+      <div class="istatus"><i class="ipulse"></i><span id="introMsg">Getting things ready</span></div>
+      <div class="ipct"><span id="introPct">000</span><em>%</em></div>
     </div>
+    <div class="ibar"><div class="ifill" id="introFill"></div></div>
   </div>
-  <div class="iline"></div>
 </div>
 
 <!-- Fixed glass navigation -->
