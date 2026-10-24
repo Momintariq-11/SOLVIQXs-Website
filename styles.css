@@ -642,9 +642,8 @@ html.has-intro:not(.intro-open), html.has-intro:not(.intro-open) body { overflow
 /* Every page uses the same background; panels sit on top of it. Light-theme colours are remapped inside sheets. */
 /* Every page, hero to footer, shares one plain white background; content sits on dark panels that rise into place */
 .sheet { background: transparent; color: var(--charcoal); border: 0; border-radius: 0; margin-top: 0; box-shadow: none;
-  position: relative; min-height: 0; padding: 0 clamp(12px, 2.5vw, 36px) 16px; margin-top: -112px; }
-.hero + .sheet { margin-top: 0; }
-.sheet > .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding: 44px clamp(24px, 4vw, 56px) 96px; border-radius: 26px;
+  position: relative; min-height: 0; padding: 0 clamp(12px, 2.5vw, 36px) 40px; }
+.sheet > .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding: 44px clamp(24px, 4vw, 56px); border-radius: 26px;
   min-height: calc(100vh - 108px); }
 /* Panels alternate between dark and light so every edge is easy to see */
 .sheet.dark > .wrap { background: var(--charcoal); color: var(--offwhite); border: 1px solid rgba(248,248,248,.12); box-shadow: 0 -8px 28px -10px rgba(0,0,0,.5);
@@ -731,7 +730,6 @@ body { background: var(--white); }
 .founder-sign a { color: var(--charcoal); font-weight: 600; text-decoration: none; }
 .founder-sign a:hover { color: var(--emerald-ink); }
 
-.contact > .wrap { padding-bottom: 44px; }
 
 /* Panels rise into place as they come on screen */
 .js .sheet > .wrap { opacity: 0; transform: translateY(70px); transition: transform .9s cubic-bezier(.2,.75,.25,1), opacity .6s ease; }
@@ -751,3 +749,6 @@ body { background: var(--white); }
 .case-note p { margin: 0 0 12px; font-size: 19px; line-height: 1.5; }
 .case-note footer span { display: block; color: var(--ink-soft); font-size: 14px; }
 @media (max-width: 520px) { .case-stack li { grid-template-columns: 44px minmax(0, 1fr); gap: 0 16px; } .case-stack .step-num { width: 44px; height: 44px; font-size: 15px; } }
+
+.founder-circle { text-decoration: none; transition: background-color .2s ease, transform .2s ease; }
+.founder-circle:hover { background: #CBD3D8; transform: scale(1.03); }
