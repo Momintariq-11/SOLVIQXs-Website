@@ -9,6 +9,8 @@
   const stepsWrap = document.getElementById('stepsWrap');
   const items = stepsWrap ? [...stepsWrap.querySelectorAll('.steps li')] : [];
   const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hero = document.querySelector('.hero-center');
+  const wraps = pages.filter((p) => p.classList.contains('sheet')).map((p) => [p, p.firstElementChild, !p.classList.contains('plain')]);
   let ticking = false, autoTimer = 0, autoActive = false;
 
   const showSteps = (n) => {
@@ -37,6 +39,18 @@
       if (i > -1 && top <= line) active = i;
       top += el.offsetHeight;
     });
+    if (!noMotion) {
+      const vh = innerHeight;
+      // first page drifts up and fades as you scroll away from it
+      if (hero) { const k = Math.min(y / (vh * 0.8), 1); hero.style.transform = `translateY(${-60 * k}px)`; hero.style.opacity = 1 - k; }
+      // each page lifts in step with the scroll (panels also grow); 0 as its top enters the screen, 1 at the middle
+      wraps.forEach(([p, w, panel]) => {
+        const t = Math.min(Math.max((vh - p.getBoundingClientRect().top) / (vh * 0.5), 0), 1);
+        const e = 1 - Math.pow(1 - t, 3);
+        w.style.transform = `translateY(${(1 - e) * 60}px)` + (panel ? ` scale(${0.92 + 0.08 * e})` : '');
+        w.style.opacity = 0.35 + 0.65 * e;
+      });
+    }
     // every page on screen animates in as soon as it peeks up, and resets once it has mostly left
     pages.forEach((p) => { const r = p.getBoundingClientRect(); p.classList.toggle('in-view', r.top < innerHeight * 0.9 && r.bottom > innerHeight * 0.2); });
     const id = pages[active].id;
@@ -56,6 +70,14 @@
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Smooth, gliding scroll; skipped for reduced motion or if the library did not load
+const lenis = !reduceMotion && window.Lenis ? new Lenis({ duration: 1.1, smoothWheel: true }) : null;
+if (lenis) {
+  const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
+  requestAnimationFrame(raf);
+  if (document.getElementById('intro')) lenis.stop();   // no scrolling while the welcome screen shows
+}
 
 // Hero: the last word is typed out, deleted, and replaced by the next one
 const typed = document.getElementById('typed');
@@ -119,6 +141,7 @@ if (intro && !reduceMotion) {
     await wait(450);
     intro.classList.add('is-open');
     document.documentElement.classList.add('intro-open');
+    if (lenis) lenis.start();
     await wait(900);
     intro.remove();
   })();
@@ -200,7 +223,7 @@ document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((link) => {
       top += el.offsetHeight;
     }
     ev.preventDefault();
-    window.scrollTo({ top: Math.max(top - 76, 0), behavior: reduceMotion ? 'auto' : 'smooth' });
+    if (lenis) lenis.scrollTo(Math.max(top - 76, 0)); else window.scrollTo({ top: Math.max(top - 76, 0), behavior: reduceMotion ? 'auto' : 'smooth' });
     history.replaceState(null, '', hash);
   });
 });

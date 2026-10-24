@@ -696,10 +696,12 @@ body { background: var(--white); }
 .founder-sign a:hover { color: var(--emerald-ink); }
 
 
-/* Panels rise into place as they come on screen */
-.js .sheet > .wrap { opacity: 0; transform: translateY(70px); transition: transform .9s cubic-bezier(.2,.75,.25,1), opacity .6s ease; }
-.js .page.in-view > .wrap { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .js .sheet > .wrap { opacity: 1; transform: none; } }
+/* Panels and the first page move with the scroll (set from script.js) */
+.sheet > .wrap, .hero-center { will-change: transform, opacity; }
+/* Smooth scrolling (Lenis) */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
 
 /* Our work: the four workflow steps, one above the other on every screen size */
 .case-stack { list-style: none; margin: 32px 0 0; padding: 0; max-width: 820px; }
