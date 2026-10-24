@@ -10,6 +10,7 @@
   const items = stepsWrap ? [...stepsWrap.querySelectorAll('.steps li')] : [];
   const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hero = document.querySelector('.hero-center');
+  const cards = [...document.querySelectorAll('.tile, .case-stack li')];
   const wraps = pages.filter((p) => p.classList.contains('sheet')).map((p) => [p, p.firstElementChild, !p.classList.contains('plain')]);
   let ticking = false, autoTimer = 0, autoActive = false;
 
@@ -40,15 +41,23 @@
       top += el.offsetHeight;
     });
     if (!noMotion) {
-      const vh = innerHeight;
-      // first page drifts up and fades as you scroll away from it
-      if (hero) { const k = Math.min(y / (vh * 0.8), 1); hero.style.transform = `translateY(${-60 * k}px)`; hero.style.opacity = 1 - k; }
-      // each page lifts in step with the scroll (panels also grow); 0 as its top enters the screen, 1 at the middle
+      const vh = innerHeight, clamp = (v) => Math.min(Math.max(v, 0), 1);
+      // first page: drifts up as it leaves, and only fades once it is mostly gone
+      if (hero) { const H = hero.parentElement.offsetHeight, k = clamp(y / H); hero.style.transform = `translateY(${-80 * k}px)`; hero.style.opacity = 1 - clamp((k - 0.35) / 0.5); }
+      // pages fly up: start 120px low and smaller, reach full size once their top is 40% down the screen
       wraps.forEach(([p, w, panel]) => {
-        const t = Math.min(Math.max((vh - p.getBoundingClientRect().top) / (vh * 0.5), 0), 1);
-        const e = 1 - Math.pow(1 - t, 3);
-        w.style.transform = `translateY(${(1 - e) * 60}px)` + (panel ? ` scale(${0.92 + 0.08 * e})` : '');
-        w.style.opacity = 0.35 + 0.65 * e;
+        const t = clamp((vh - p.getBoundingClientRect().top) / (vh * 0.6));
+        w.style.transform = `translateY(${(1 - t) * 120}px)` + (panel ? ` scale(${0.9 + 0.1 * t})` : '');
+        w.style.opacity = 0.35 + 0.65 * clamp(t / 0.85);
+      });
+      // cards settle into place one after another as they come up
+      cards.forEach((c, i) => {
+        const shift = +c.dataset.ty || 0, from = 60 + (i % 4) * 22;
+        const t = clamp((vh - (c.getBoundingClientRect().top - shift)) / (vh * 0.45));
+        const ty = (1 - t) * from;
+        c.dataset.ty = ty;
+        c.style.transform = `translateY(${ty}px) scale(${0.93 + 0.07 * t})`;
+        c.style.opacity = clamp(t / 0.85);
       });
     }
     // every page on screen animates in as soon as it peeks up, and resets once it has mostly left
