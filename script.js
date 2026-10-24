@@ -108,59 +108,31 @@ if (term) {
   }
 }
 
-// Remove the intro layer once it has played so it never blocks anything.
+// Opening screen: "Welcome" / "to SOLVIQX" types out, then the screen fades and the hero starts.
 const intro = document.getElementById('intro');
 if (intro && !reduceMotion) {
-  const fill = document.getElementById('introFill');
-  const pct = document.getElementById('introPct');
-  const msg = document.getElementById('introMsg');
-  const steps = [
-    [0, 'Getting things ready'],
-    [20, 'Designing the UI around you'],
-    [45, 'Connecting your systems'],
-    [70, 'Polishing the details'],
-    [88, 'Almost ready'],
-    [100, 'Ready']
-  ];
-  // Status text "decodes" into place: characters cycle through code-like glyphs, then resolve left to right
-  const glyphs = '01<>/{}[]#=+*ABCDEFXQ';
-  let shown = '', scrambleTimer = 0;
-  const setMsg = (text) => {
-    if (text === shown) return;
-    shown = text;
-    const hasLogo = text.includes('SOLVIQX');
-    const plain = hasLogo ? text.replace('SOLVIQX', '').trim() : text;
-    const logo = hasLogo ? ' <img class="msg-logo" src="assets/wordmark.png" alt="SOLVIQX">' : '';
-    cancelAnimationFrame(scrambleTimer);
-    const t0 = performance.now(), dur = 420;
-    const step = (now) => {
-      const p = Math.min((now - t0) / dur, 1);
-      const done = Math.floor(p * plain.length);
-      let out = plain.slice(0, done);
-      for (let k = done; k < plain.length; k++) out += plain[k] === ' ' ? ' ' : glyphs[(Math.random() * glyphs.length) | 0];
-      msg.innerHTML = out.replace(/&/g, '&amp;').replace(/</g, '&lt;') + (p === 1 ? logo : '');
-      if (p < 1) scrambleTimer = requestAnimationFrame(step);
-    };
-    scrambleTimer = requestAnimationFrame(step);
-  };
-  const duration = 2600, start = performance.now() + 500;
-  const ease = (t) => (t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
-  const tick = (now) => {
-    const t = Math.min(Math.max((now - start) / duration, 0), 1);
-    const v = Math.round(ease(t) * 100);
-    fill.style.width = `${v}%`;
-    pct.textContent = String(v).padStart(3, '0');
-    setMsg(steps.filter(([at]) => v >= at).pop()[1]);
-    if (t < 1) { requestAnimationFrame(tick); return; }
-    intro.classList.add('is-welcome');
-    setTimeout(() => { intro.classList.add('is-open'); document.documentElement.classList.add('intro-open'); }, 700);
-    setTimeout(() => intro.remove(), 1700);
-  };
-  requestAnimationFrame(tick);
+  const type = async (el, text) => { for (const ch of text) { el.textContent += ch; await wait(40); } };
+  (async () => {
+    await wait(250);
+    await type(document.getElementById('iw1'), 'Welcome');
+    await wait(120);
+    await type(document.getElementById('iw2a'), 'to ');
+    await type(document.getElementById('iw2b'), 'SOLVIQX');
+    await wait(450);
+    intro.classList.add('is-open');
+    document.documentElement.classList.add('intro-open');
+    await wait(900);
+    intro.remove();
+  })();
 } else {
   if (intro) intro.remove();
   document.documentElement.classList.add('intro-open');
 }
+
+// The scroll hint hops until the visitor scrolls, and starts again when they are back at the top.
+const markScrolled = () => document.documentElement.classList.toggle('is-scrolled', window.scrollY > 8);
+window.addEventListener('scroll', markScrolled, { passive: true });
+markScrolled();
 
 // Inquiry form: until a form service is connected, open the visitor's email app with the details filled in.
 const form = document.getElementById('inquiry');
