@@ -642,7 +642,7 @@ html.has-intro:not(.intro-open), html.has-intro:not(.intro-open) body { overflow
 /* Every page uses the same background; panels sit on top of it. Light-theme colours are remapped inside sheets. */
 /* Every page, hero to footer, shares one plain white background; content sits on dark panels that rise into place */
 .sheet { background: transparent; color: var(--charcoal); border: 0; border-radius: 0; margin-top: 0; box-shadow: none;
-  position: relative; min-height: 0; padding: 0 clamp(12px, 2.5vw, 36px) 40px; }
+  position: relative; min-height: 0; padding: 0 clamp(12px, 2.5vw, 36px) 16px; }
 .sheet > .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding: 44px clamp(24px, 4vw, 56px); border-radius: 26px;
   min-height: calc(100vh - 108px); }
 /* Panels alternate between dark and light so every edge is easy to see */
@@ -746,3 +746,14 @@ body { background: var(--white); }
 
 .founder-circle { text-decoration: none; transition: background-color .2s ease, transform .2s ease; }
 .founder-circle:hover { background: #CBD3D8; transform: scale(1.03); }
+
+/* Some pages sit straight on the white background with no panel; only a few use a dark panel */
+.sheet.plain > .wrap { background: transparent; border: 0; border-radius: 0; box-shadow: none; min-height: 0; padding-block: 56px; }
+.sheet.plain + .sheet.plain > .wrap { border-top: 1px solid var(--line-light); }
+
+/* Straight footer at the very bottom of the page */
+.footer { margin: 24px 0 0; border: 0; border-radius: 0; }
+.footer .wrap { padding-block: 26px 14px; }
+.footer-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+.footer .btn { min-height: 40px; padding: 8px 18px; font-size: 14px; }
+.copyright { margin: 0; padding: 0 0 22px; text-align: center; font-size: 13px; color: rgba(248,248,248,.55); }
