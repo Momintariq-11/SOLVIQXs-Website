@@ -143,7 +143,6 @@ if (form) {
       `Name: ${d.get('name')}`,
       `Business: ${d.get('business')}`,
       `Contact: ${d.get('contact')}`,
-      `Services: ${d.getAll('service').join(', ') || 'Not specified'}`,
       '',
       d.get('message') || ''
     ].join('\n');
@@ -185,14 +184,6 @@ document.querySelectorAll('.faq details').forEach((d, _, all) => {
   heads.forEach((h) => { i = 0; h.setAttribute('aria-label', h.textContent.trim()); wrap(h); });
 
 })();
-
-// Service chips: "Complete package" covers everything, so it clears the others (and vice versa)
-const chips = document.querySelectorAll('.chips input');
-chips.forEach((c) => c.addEventListener('change', () => {
-  if (!c.checked) return;
-  const all = c.value === 'Complete package';
-  chips.forEach((o) => { if (o !== c && (all || o.value === 'Complete package')) o.checked = false; });
-}));
 
 // In-page links (nav, buttons, footer): the pages are stacked on top of each other, so the browser
 // can think an earlier page is "already on screen". Work out each page's real position and scroll there.
