@@ -729,3 +729,4 @@ body { background: var(--white); }
 .copyright { margin: 0; padding: 0 0 22px; text-align: center; font-size: 13px; color: rgba(248,248,248,.55); }
 
 .sheet.dark .case-stack .step-tag { color: var(--emerald); }
+.faq-wrap > .ask-card { flex: 1 1 100%; margin-top: 0; }
