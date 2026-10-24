@@ -791,3 +791,17 @@ html.lenis, html.lenis body { height: auto; }
 .contact-center .lead { margin: 0 auto; }
 .contact-center .form { margin-inline: auto; }
 .contact-center .form .btn { align-self: center; }
+/* Slightly bigger island */
+.site-nav .nav { padding: 8px 12px 8px 28px; gap: 22px; }
+.site-nav .wordmark-link img { height: 22px; }
+.site-nav .nav-links { font-size: 15px; }
+.site-nav .nav-links a { padding: 11px 14px; }
+.site-nav .nav-links a::after { left: 14px; right: 14px; bottom: 5px; }
+.site-nav .nav-links a.nav-contact, .site-nav .nav-links a.nav-contact.active { padding: 10px 20px; }
+@media (max-width: 720px) {
+  .site-nav .nav { padding: 5px 8px 5px 16px; gap: 10px; }
+  .site-nav .wordmark-link img { height: 15px; }
+  .site-nav .nav-links { font-size: 14px; }
+  .site-nav .nav-links a { padding: 11px 10px; }
+  .site-nav .nav-links a::after { left: 10px; right: 10px; }
+}

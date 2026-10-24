@@ -69,8 +69,8 @@
     document.querySelectorAll('.nav-links a').forEach((a) =>
       a.classList.toggle('active', (a.dataset.pages || '').split(' ').includes(id)));
     // phones: keep the underlined button in view inside the island's sideways-scrolling row
-    const on = document.querySelector('.nav-links a.active'), row = on && on.parentElement;
-    if (on && row.scrollWidth > row.clientWidth) row.scrollLeft = on.offsetLeft - (row.clientWidth - on.offsetWidth) / 2;
+    const on = document.querySelector('.nav-links a.active'), row = document.querySelector('.nav-links');
+    if (row && row.scrollWidth > row.clientWidth) row.scrollLeft = on ? on.offsetLeft - (row.clientWidth - on.offsetWidth) / 2 : 0;
 
     if (!stepsWrap) return;
     if (noMotion) { showSteps(4); return; }
