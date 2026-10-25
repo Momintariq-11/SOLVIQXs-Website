@@ -809,14 +809,19 @@ html.lenis, html.lenis body { height: auto; }
 .founder { justify-content: center; }
 
 /* ===== Phones, assembling boxes, customer note ===== */
-/* Services boxes fly in from different sides, one by one */
-.js .assemble .tile { transition: transform .7s cubic-bezier(.2,.75,.25,1), opacity .5s ease, border-color .35s ease; transition-delay: calc(var(--n, 0) * 90ms); }
-.js .assemble:not(.assembled) .tile { opacity: 0; transition-delay: 0s; }
-.js .assemble:not(.assembled) .tile:nth-child(3n+1) { transform: translate(-140px, 40px) rotate(-6deg); }
-.js .assemble:not(.assembled) .tile:nth-child(3n+2) { transform: translateY(160px) scale(.85); }
-.js .assemble:not(.assembled) .tile:nth-child(3n) { transform: translate(140px, 40px) rotate(6deg); }
+/* Services boxes fly in from different sides, each as it scrolls into view (boxes in the same row follow each other) */
+.js .assemble .tile { transition: transform .7s cubic-bezier(.2,.75,.25,1), opacity .5s ease, border-color .35s ease; transition-delay: calc(var(--c, 0) * 110ms); }
+.assemble .tile:nth-child(4n+2) { --c: 1; } .assemble .tile:nth-child(4n+3) { --c: 2; } .assemble .tile:nth-child(4n+4) { --c: 3; }
+.js .assemble .tile:not(.in) { opacity: 0; transition-delay: 0s; }
+.js .assemble .tile:not(.in):nth-child(3n+1) { transform: translate(-140px, 40px) rotate(-6deg); }
+.js .assemble .tile:not(.in):nth-child(3n+2) { transform: translateY(160px) scale(.85); }
+.js .assemble .tile:not(.in):nth-child(3n) { transform: translate(140px, 40px) rotate(6deg); }
 .js .assemble .tile:hover { transition-delay: 0s; }
-@media (prefers-reduced-motion: reduce) { .js .assemble .tile { opacity: 1 !important; transform: none !important; } }
+/* Arab Foods steps rise in one by one */
+.js .case-stack li { transition: opacity .5s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+.js .case-stack li:not(.in) { opacity: 0; transform: translateY(40px); }
+@media (max-width: 720px) { .assemble .tile { --c: 0 !important; } }
+@media (prefers-reduced-motion: reduce) { .js .assemble .tile, .js .case-stack li { opacity: 1 !important; transform: none !important; } }
 
 /* Customer note: small "S" circle, then name and title */
 .case-note footer { display: flex; align-items: center; gap: 14px; }
@@ -865,3 +870,17 @@ html.lenis, html.lenis body { height: auto; }
   .site-nav .nav-links a[href]:not(.nav-contact) { display: none; }
   .site-nav .nav-links a.nav-contact, .site-nav .nav-links a.nav-contact.active { margin-left: 0; padding: 8px 14px; font-size: 13px; }
 }
+
+/* Founder note centred on every screen */
+.founder { flex-direction: column; align-items: center; text-align: center; gap: 32px; }
+.founder-text { max-width: 820px; }
+.founder .eyebrow { justify-content: center; }
+
+/* Phones: footer logo centred; email on one side, LinkedIn and Instagram on the other */
+@media (max-width: 720px) {
+  .footer .footer-top { flex-direction: column; align-items: stretch; }
+  .footer .lockup { align-self: center; }
+  .footer .footer-social { justify-content: flex-start; gap: 18px; }
+  .footer .footer-social a:first-child { margin-right: auto; }
+}
+.founder-text { flex: none; }   /* in the centred column its old 420px basis became extra height */

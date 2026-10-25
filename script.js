@@ -242,8 +242,9 @@ document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((link) => {
   });
 });
 
-// Services boxes: fly in from different sides one after another whenever the grid comes into view
-const grid = document.querySelector('.assemble');
-if (grid && 'IntersectionObserver' in window) {
-  new IntersectionObserver(([e]) => grid.classList.toggle('assembled', e.isIntersecting), { threshold: 0.15 }).observe(grid);
-} else if (grid) grid.classList.add('assembled');
+// Services boxes and the Arab Foods steps appear one by one, each as you scroll to it (and again on the way back)
+const oneByOne = document.querySelectorAll('.assemble .tile, .case-stack li');
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('in', e.isIntersecting)), { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+  oneByOne.forEach((el) => io.observe(el));
+} else oneByOne.forEach((el) => el.classList.add('in'));
