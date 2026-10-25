@@ -118,8 +118,8 @@ html { overflow-x: clip; }
 /* Reveals: scroll-driven where supported, otherwise IntersectionObserver (script.js) */
 @keyframes reveal { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: none; } }
 @keyframes draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-.js .rv, .js .rv2, .js .rv3 { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
-.js .rv2 { transition-delay: .12s; } .js .rv3 { transition-delay: .24s; }
+.js .rv, .js .rv2, .js .rv3 { opacity: 0; transform: translateY(30px); transition: opacity .5s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+.js .rv2 { transition-delay: .06s; } .js .rv3 { transition-delay: .12s; }
 .js .draw { transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(.2,.7,.2,1) .35s; }
 .js .rv.is-in, .js .rv2.is-in, .js .rv3.is-in, .js .draw.is-in { opacity: 1; transform: none; }
 
@@ -331,7 +331,7 @@ html { overflow-x: clip; }
 
 /* ===== Headings animate word by word when their page arrives ===== */
 .w { display: inline-block; opacity: 0; transform: translateY(.55em) rotate(3deg); transform-origin: left bottom;
-     transition: opacity .6s ease, transform .75s cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--i) * 60ms + 80ms); }
+     transition: opacity .45s ease, transform .55s cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--i) * 35ms + 40ms); }
 .words-in .w { opacity: 1; transform: none; }
 .split-words .u-mark { background-size: 0% 100%; background-repeat: no-repeat; transition: background-size .9s cubic-bezier(.6,0,.3,1) .55s;
   background-image: linear-gradient(transparent 68%, rgba(19,201,138,.55) 68%, rgba(19,201,138,.55) 92%, transparent 92%); }
@@ -751,7 +751,6 @@ html.lenis, html.lenis body { height: auto; }
 .footer .footer-buttons { order: 3; flex-basis: 100%; justify-content: center; }
 /* First page ends a little early so the next panel is already waiting at the bottom */
 .hero { min-height: 86vh; }
-.tile, .case-stack li { will-change: transform, opacity; }
 .case-note { max-width: 960px; padding-top: 32px; }
 .case-note p { font-family: var(--font-display); font-size: clamp(24px, 2.6vw, 34px); line-height: 1.3; letter-spacing: -.01em; color: var(--charcoal); margin-bottom: 18px; }
 .case-note footer strong { font-size: 18px; }
@@ -808,3 +807,35 @@ html.lenis, html.lenis body { height: auto; }
 /* Big screens: the Work case and the founder note sit in a centred column instead of hugging the left */
 .work > * { width: 100%; max-width: 980px; margin-inline: auto; }
 .founder { justify-content: center; }
+
+/* ===== Phones, assembling boxes, customer note ===== */
+/* Services boxes fly in from different sides, one by one */
+.js .assemble .tile { transition: transform .7s cubic-bezier(.2,.75,.25,1), opacity .5s ease, border-color .35s ease; transition-delay: calc(var(--n, 0) * 90ms); }
+.js .assemble:not(.assembled) .tile { opacity: 0; transition-delay: 0s; }
+.js .assemble:not(.assembled) .tile:nth-child(3n+1) { transform: translate(-140px, 40px) rotate(-6deg); }
+.js .assemble:not(.assembled) .tile:nth-child(3n+2) { transform: translateY(160px) scale(.85); }
+.js .assemble:not(.assembled) .tile:nth-child(3n) { transform: translate(140px, 40px) rotate(6deg); }
+.js .assemble .tile:hover { transition-delay: 0s; }
+@media (prefers-reduced-motion: reduce) { .js .assemble .tile { opacity: 1 !important; transform: none !important; } }
+
+/* Customer note: small "S" circle, then name and title */
+.case-note footer { display: flex; align-items: center; gap: 14px; }
+.case-note footer strong, .case-note footer span:not(.note-avatar) { display: block; }
+.note-avatar { flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: #DDE2E5;
+  font-family: var(--font-display); font-weight: 700; font-size: 20px; color: var(--charcoal); }
+
+/* Phones: light rise instead of scroll-linked motion, smaller island, lighter glass */
+@media (max-width: 720px) {
+  .js .sheet > .wrap { transition: transform .6s cubic-bezier(.2,.7,.2,1), opacity .5s ease; }
+  .js .page.sheet:not(.in-view) > .wrap { opacity: 0; transform: translateY(50px); }
+  .sheet > .wrap, .hero-center { will-change: auto; }
+  .site-nav { top: 6px; }
+  .site-nav .nav { padding: 3px 5px 3px 12px; gap: 6px; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .site-nav .wordmark-link img { height: 11px; }
+  .site-nav .nav-links { font-size: 12px; }
+  .site-nav .nav-links a { padding: 8px 7px; }
+  .site-nav .nav-links a::after { left: 7px; right: 7px; bottom: 3px; }
+  .site-nav .nav-links a.nav-contact, .site-nav .nav-links a.nav-contact.active { padding: 6px 12px; }
+}
+.site-nav .nav-links { justify-content: flex-start; }   /* centred overflow would hide the first buttons on phones */
+.case-note footer .note-avatar { display: grid; place-items: center; font-size: 20px; color: var(--charcoal); }

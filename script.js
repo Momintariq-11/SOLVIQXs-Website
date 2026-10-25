@@ -9,8 +9,8 @@
   const stepsWrap = document.getElementById('stepsWrap');
   const items = stepsWrap ? [...stepsWrap.querySelectorAll('.steps li')] : [];
   const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const phone = window.matchMedia('(max-width: 720px)').matches;   // phones skip the scroll-linked motion so scrolling stays smooth
   const hero = document.querySelector('.hero-center');
-  const cards = [...document.querySelectorAll('.tile, .case-stack li')];
   const wraps = pages.filter((p) => p.classList.contains('sheet')).map((p) => [p, p.firstElementChild, !p.classList.contains('plain')]);
   let ticking = false, autoTimer = 0, autoActive = false;
 
@@ -26,7 +26,7 @@
     let n = 0;
     clearInterval(autoTimer);
     showSteps(0);
-    autoTimer = setInterval(() => { showSteps(++n); if (n >= 4) clearInterval(autoTimer); }, 550);
+    autoTimer = setInterval(() => { showSteps(++n); if (n >= 4) clearInterval(autoTimer); }, 300);
   };
   const stopAuto = () => { autoActive = false; clearInterval(autoTimer); showSteps(0); };
 
@@ -35,32 +35,23 @@
     const y = window.scrollY, line = y + window.innerHeight * 0.55;
     let top = 0, active = 0;
     [...main.children].forEach((el) => {
-      top += parseFloat(getComputedStyle(el).marginTop) || 0;   // each panel overlaps the bottom of the one above
       const i = pages.indexOf(el);
       if (i > -1 && top <= line) active = i;
       top += el.offsetHeight;
     });
-    if (!noMotion) {
+    if (!noMotion && !phone) {
       const vh = innerHeight, clamp = (v) => Math.min(Math.max(v, 0), 1);
       // first page: drifts up as it leaves, and only fades once it is mostly gone
       if (hero) { const H = hero.parentElement.offsetHeight, k = clamp(y / H); hero.style.transform = `translateY(${-80 * k}px)`; hero.style.opacity = 1 - clamp((k - 0.35) / 0.5); }
       // pages fly up: start 120px low and smaller, reach full size once their top is 40% down the screen
-      wraps.forEach(([p, w, panel]) => {
-        const r = p.getBoundingClientRect();
+      const rects = wraps.map(([p]) => p.getBoundingClientRect());
+      wraps.forEach(([p, w, panel], i) => {
+        const r = rects[i];
         const t = clamp((vh - r.top) / (vh * 0.6));
         // once it has passed the top it keeps flying up, a little faster than the scroll, and eases out
         const out = clamp(-r.top / Math.max(r.height, vh));
         w.style.transform = `translateY(${(1 - t) * 120 - out * 90}px)` + (panel ? ` scale(${(0.9 + 0.1 * t) - out * 0.05})` : '');
         w.style.opacity = (0.35 + 0.65 * clamp(t / 0.85)) * (1 - clamp((out - 0.5) / 0.5) * 0.5);   // tall panels stay readable until they are mostly gone
-      });
-      // cards settle into place one after another as they come up
-      cards.forEach((c, i) => {
-        const shift = +c.dataset.ty || 0, from = 60 + (i % 4) * 22;
-        const t = clamp((vh - (c.getBoundingClientRect().top - shift)) / (vh * 0.45));
-        const ty = (1 - t) * from;
-        c.dataset.ty = ty;
-        c.style.transform = `translateY(${ty}px) scale(${0.93 + 0.07 * t})`;
-        c.style.opacity = clamp(t / 0.85);
       });
     }
     // every page on screen animates in as soon as it peeks up, and resets once it has mostly left
@@ -74,7 +65,7 @@
 
     if (!stepsWrap) return;
     if (noMotion) { showSteps(4); return; }
-    if (id !== 'process') { stopAuto(); return; }
+    if (!stepsWrap.closest('.page').classList.contains('in-view')) { stopAuto(); return; }
     playAuto();   // steps appear one by one on their own, on every screen size
   };
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
@@ -233,7 +224,6 @@ document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((link) => {
     const page = target.closest('main > .page') || target;
     let top = 0;
     for (const el of document.querySelector('main').children) {
-      top += parseFloat(getComputedStyle(el).marginTop) || 0;
       if (el === page) break;
       top += el.offsetHeight;
     }
@@ -242,3 +232,9 @@ document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((link) => {
     history.replaceState(null, '', hash);
   });
 });
+
+// Services boxes: fly in from different sides one after another whenever the grid comes into view
+const grid = document.querySelector('.assemble');
+if (grid && 'IntersectionObserver' in window) {
+  new IntersectionObserver(([e]) => grid.classList.toggle('assembled', e.isIntersecting), { threshold: 0.15 }).observe(grid);
+} else if (grid) grid.classList.add('assembled');
