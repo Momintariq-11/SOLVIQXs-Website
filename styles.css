@@ -839,3 +839,15 @@ html.lenis, html.lenis body { height: auto; }
 }
 .site-nav .nav-links { justify-content: flex-start; }   /* centred overflow would hide the first buttons on phones */
 .case-note footer .note-avatar { display: grid; place-items: center; font-size: 20px; color: var(--charcoal); }
+
+/* Phones: the island is the logo plus the current page's name (the page buttons live in the footer) */
+@keyframes islandUp { from { transform: translateY(80%); opacity: 0; } to { transform: none; opacity: 1; } }
+.island-label { display: none; }
+@media (max-width: 720px) {
+  .site-nav .nav-links { display: none; }
+  .site-nav .nav { padding: 9px 18px; gap: 0; }
+  .site-nav .wordmark-link img { height: 13px; }
+  .island-label { display: inline-block; overflow: hidden; font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--offwhite); white-space: nowrap; }
+  .island-label:not(:empty) { margin-left: 12px; padding-left: 12px; border-left: 1px solid rgba(255,255,255,.22); }
+  .island-label.swap { animation: islandUp .4s cubic-bezier(.2,.7,.2,1); }
+}

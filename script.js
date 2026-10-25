@@ -12,6 +12,9 @@
   const phone = window.matchMedia('(max-width: 720px)').matches;   // phones skip the scroll-linked motion so scrolling stays smooth
   const hero = document.querySelector('.hero-center');
   const wraps = pages.filter((p) => p.classList.contains('sheet')).map((p) => [p, p.firstElementChild, !p.classList.contains('plain')]);
+  const label = document.querySelector('.island-label');
+  const names = { about: 'About', software: 'Services', process: 'Workflow', work: 'Work', founder: 'From the founder', faq: 'FAQ', contact: 'Contact' };
+  let lastId = '';
   let ticking = false, autoTimer = 0, autoActive = false;
 
   const showSteps = (n) => {
@@ -59,6 +62,12 @@
     const id = pages[active].id;
     document.querySelectorAll('.nav-links a').forEach((a) =>
       a.classList.toggle('active', (a.dataset.pages || '').split(' ').includes(id)));
+    // phones: the island shows the name of the page you are on, and the new name rises in as you move on
+    if (id !== lastId) {
+      lastId = id;
+      label.textContent = names[id] || '';
+      label.classList.remove('swap'); void label.offsetWidth; label.classList.add('swap');
+    }
     // phones: keep the underlined button in view inside the island's sideways-scrolling row
     const on = document.querySelector('.nav-links a.active'), row = document.querySelector('.nav-links');
     if (row && row.scrollWidth > row.clientWidth) row.scrollLeft = on ? on.offsetLeft - (row.clientWidth - on.offsetWidth) / 2 : 0;
