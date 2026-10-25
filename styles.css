@@ -887,3 +887,13 @@ html.lenis, html.lenis body { height: auto; }
 /* Customer note centred: the quote, then the S circle with name and title as one centred group */
 .case-note { text-align: center; margin-inline: auto; }
 .case-note footer { justify-content: center; text-align: left; }
+
+/* Quotes darken word by word; the good parts turn green */
+.qw { color: #C5CBD0; transition: color .25s ease; }
+.qw.on { color: var(--charcoal); }
+.hl .qw.on, .founder-quote .accent .qw.on { color: var(--emerald-ink); }
+
+/* Client note: a short line, then the S circle, the name and the title, stacked and centred */
+.case-note footer { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.case-note footer .note-line { width: 56px; height: 2px; border-radius: 2px; background: var(--line-light); margin: 6px 0 18px; }
+.case-note footer .note-avatar { margin-bottom: 8px; }

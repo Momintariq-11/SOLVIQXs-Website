@@ -248,3 +248,36 @@ if ('IntersectionObserver' in window) {
   const io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('in', e.isIntersecting)), { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
   oneByOne.forEach((el) => io.observe(el));
 } else oneByOne.forEach((el) => el.classList.add('in'));
+
+// Quotes (founder and client) start light and darken word by word as you scroll through them
+(() => {
+  const quotes = [...document.querySelectorAll('.founder-quote, .case-note p')];
+  if (!quotes.length) return;
+  const split = (node) => [...node.childNodes].forEach((child) => {
+    if (child.nodeType === Node.ELEMENT_NODE) { split(child); return; }
+    if (child.nodeType !== Node.TEXT_NODE) return;
+    const frag = document.createDocumentFragment();
+    child.textContent.split(/(\s+)/).forEach((part) => {
+      if (!part) return;
+      if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+      const w = document.createElement('span'); w.className = 'qw'; w.textContent = part; frag.appendChild(w);
+    });
+    child.replaceWith(frag);
+  });
+  const sets = quotes.map((q) => { q.setAttribute('aria-label', q.textContent.trim()); split(q); return [q, [...q.querySelectorAll('.qw')]]; });
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { sets.forEach(([, ws]) => ws.forEach((w) => w.classList.add('on'))); return; }
+  let busy = false;
+  const paint = () => {
+    busy = false;
+    sets.forEach(([q, ws]) => {
+      const r = q.getBoundingClientRect();
+      // 0 when the quote's top is 85% down the screen, 1 when its bottom reaches 45%
+      const t = Math.min(Math.max((innerHeight * 0.85 - r.top) / (innerHeight * 0.4 + r.height), 0), 1);
+      const n = Math.round(t * ws.length);
+      ws.forEach((w, i) => w.classList.toggle('on', i < n));
+    });
+  };
+  window.addEventListener('scroll', () => { if (!busy) { busy = true; requestAnimationFrame(paint); } }, { passive: true });
+  paint();
+})();
+
