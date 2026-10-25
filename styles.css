@@ -856,3 +856,12 @@ html.lenis, html.lenis body { height: auto; }
   .site-nav .nav { width: calc(100vw - 24px); justify-content: space-between; padding: 10px 18px; }
   .island-label:not(:empty) { margin-left: 0; padding-left: 0; border-left: 0; }
 }
+/* Phones: SOLVIQX on the left, the page name in the middle, the green Contact button on the right */
+@media (max-width: 720px) {
+  .site-nav .nav { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; padding: 5px 5px 5px 16px; }
+  .site-nav .wordmark-link { order: 1; }
+  .island-label { order: 2; text-align: center; }
+  .site-nav .nav-links { order: 3; display: flex; -webkit-mask-image: none; mask-image: none; overflow: visible; }
+  .site-nav .nav-links a[href]:not(.nav-contact) { display: none; }
+  .site-nav .nav-links a.nav-contact, .site-nav .nav-links a.nav-contact.active { margin-left: 0; padding: 8px 14px; font-size: 13px; }
+}
