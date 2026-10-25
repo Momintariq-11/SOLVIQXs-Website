@@ -884,3 +884,6 @@ html.lenis, html.lenis body { height: auto; }
   .footer .footer-social a:first-child { margin-right: auto; }
 }
 .founder-text { flex: none; }   /* in the centred column its old 420px basis became extra height */
+/* Customer note centred: the quote, then the S circle with name and title as one centred group */
+.case-note { text-align: center; margin-inline: auto; }
+.case-note footer { justify-content: center; text-align: left; }
