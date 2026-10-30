@@ -13,7 +13,7 @@
   const hero = document.querySelector('.hero-center');
   const wraps = pages.filter((p) => p.classList.contains('sheet')).map((p) => [p, p.firstElementChild, !p.classList.contains('plain')]);
   const label = document.querySelector('.island-label');
-  const names = { about: 'About', software: 'Services', process: 'Workflow', work: 'Work', founder: 'From the founder', faq: 'FAQ', contact: 'Contact' };
+  const names = { about: 'About', software: 'Services', process: 'Workflow', work: 'Work', planner: 'Planner', founder: 'From the founder', faq: 'FAQ', contact: 'Contact' };
   let lastId = '';
   let ticking = false, autoTimer = 0, autoActive = false;
 
