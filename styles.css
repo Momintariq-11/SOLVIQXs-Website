@@ -905,3 +905,8 @@ html.lenis, html.lenis body { height: auto; }
   .site-nav .nav-links { justify-self: end; align-items: center; }
   .site-nav .nav-links a.nav-contact, .site-nav .nav-links a.nav-contact.active { line-height: 1.2; }
 }
+/* Phone footer: email on its own line, then LinkedIn, Instagram and Upwork centred together */
+@media (max-width: 720px) {
+  .footer .footer-social { justify-content: center; }
+  .footer .footer-social a:first-child { flex-basis: 100%; margin-right: 0; text-align: center; }
+}
