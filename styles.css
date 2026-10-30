@@ -637,7 +637,7 @@ html:not(.is-scrolled) .scroll-down span, html:not(.is-scrolled) .scroll-down sv
 
 
 /* ===== v14: the hero joins the same white background ===== */
-:root { --emerald-ink: #0A8F63; }   /* darker emerald, readable as text on white */
+:root { --emerald-ink: #087A55; }   /* darker emerald, readable as text on white */
 body { background: var(--white); }
 .hero.dark { background: var(--white); color: var(--charcoal); }
 .hero .grid-bg { display: none; }
