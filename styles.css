@@ -910,3 +910,11 @@ html.lenis, html.lenis body { height: auto; }
   .footer .footer-social { justify-content: center; }
   .footer .footer-social a:first-child { flex-basis: 100%; margin-right: 0; text-align: center; }
 }
+
+/* Breadcrumbs and author line on the service pages */
+.crumbs { margin: 0 0 18px; font-size: 13px; color: var(--ink-soft); }
+.crumbs a { color: inherit; text-decoration: none; }
+.crumbs a:hover { color: var(--emerald-ink); }
+.crumbs [aria-current] { color: var(--charcoal); }
+.author-bio { margin: 22px 0 0; font-size: 14px; color: var(--ink-soft); }
+.author-bio a { color: var(--charcoal); }

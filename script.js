@@ -148,7 +148,6 @@ const intro = document.getElementById('intro');
 if (intro && !reduceMotion) {
   const type = async (el, text) => { for (const ch of text) { el.textContent += ch; await wait(40); } };
   (async () => {
-    await wait(250);
     await type(document.getElementById('iw1'), 'Welcome');
     await wait(120);
     await type(document.getElementById('iw2a'), 'to ');
