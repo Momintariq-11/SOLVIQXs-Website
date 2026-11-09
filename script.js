@@ -97,7 +97,7 @@ if (lenis) {
 // Hero: the last word is typed out, deleted, and replaced by the next one
 const typed = document.getElementById('typed');
 if (typed && !reduceMotion) {
-  const words = ['software.', 'web apps.', 'SaaS products.', 'mobile apps.', 'AI automation.', 'dashboards.', 'websites.', 'systems.'];
+  const words = ['software.', 'SaaS products.', 'AI systems.', 'chatbots.', 'web apps.', 'mobile apps.'];
   typed.classList.add('typing');
   (async () => {
     await wait(4200);
