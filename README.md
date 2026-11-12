@@ -22,6 +22,6 @@ Then open http://localhost:8000 in Chrome or Edge. (Double-clicking `index.html`
 
 ## Before / after launch
 
-- Contact form: currently opens the visitor's email app addressed to connect@solviqx.com. Connect a form service (e.g. Formspree or Web3Forms) so inquiries arrive directly.
+- Contact form: currently opens the visitor's email app addressed to team@solviqx.com. Connect a form service (e.g. Formspree or Web3Forms) so inquiries arrive directly.
 - Fonts (Space Grotesk + DM Sans) load from Google Fonts.
 - After it's live, submit the site in Google Search Console so Google can index it.

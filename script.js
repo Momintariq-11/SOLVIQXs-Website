@@ -183,7 +183,7 @@ if (form) {
       '',
       d.get('message') || ''
     ].join('\n');
-    window.location.href = `mailto:connect@solviqx.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:team@solviqx.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 }
 
